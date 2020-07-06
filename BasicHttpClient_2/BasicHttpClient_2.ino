@@ -44,14 +44,14 @@ void loop() {
   if ((wifiMulti.run() == WL_CONNECTED)) { // Si c'est connecté, ça fait ce qu'il y à en dessous
 
     HTTPClient http; // va créer un objet qui s'appelle HTTPClient qui va permettre de lancer des requêtes en HTTP
-    
-    float t= random(25,35); // t = nombre au hasard entre 25 & 35
-    USE_SERIAL.println("[DEBG] "+ String(t));
+
+    float t = random(25, 35); // t = nombre au hasard entre 25 & 35
+    USE_SERIAL.println("[DEBG] " + String(t));
 
     USE_SERIAL.print("[HTTP] begin...\n");
     // configure traged server and url
     //http.begin("https://www.howsmyssl.com/a/check", ca); //HTTPS
-    http.begin("http://192.168.1.200:1883/T/31"); //HTTP => démarre connexion vers le serveur mentionné
+    http.begin("http://192.168.1.200:1883/T/" + String(t)); //HTTP => démarre connexion vers le serveur mentionné
 
     USE_SERIAL.print("[HTTP] GET...\n");
     // start connection and send HTTP header
