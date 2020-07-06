@@ -17,7 +17,10 @@
 WiFiMulti wifiMulti;
 
 void setup() {
+  
 
+    pinMode(4,OUTPUT);
+    digitalWrite(4,LOW);
     USE_SERIAL.begin(115200);
 
     USE_SERIAL.println();
@@ -62,7 +65,8 @@ void loop() {
                   digitalWrite(4,HIGH);
                   }
                 if (payload=="OFF"){
-                  digitalWrite(4,LOW)}
+                  digitalWrite(4,LOW);
+                  }
             }
         } else { // sinon, il dit que ça ne fonctionne pas
             USE_SERIAL.printf("[HTTP] GET... failed, error: %s\n", http.errorToString(httpCode).c_str());
