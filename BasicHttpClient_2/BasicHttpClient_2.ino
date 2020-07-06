@@ -45,7 +45,7 @@ void loop() {
 
     HTTPClient http; // va créer un objet qui s'appelle HTTPClient qui va permettre de lancer des requêtes en HTTP
     
-    float t= (temprature_sens_read() - 32) / 1.8;
+    float t= random(25,35); // t = nombre au hasard entre 25 & 35
     USE_SERIAL.println("[DEBG] "+ String(t));
 
     USE_SERIAL.print("[HTTP] begin...\n");
