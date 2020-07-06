@@ -30,7 +30,7 @@ void setup() {
         delay(1000);
     }
 
-    wifiMulti.addAP("POP_SENSORS", "P0PSNS0RS!");
+    wifiMulti.addAP("POP_SENSORS", "P0PS3NS0RS!");
 
 }
 
@@ -43,7 +43,7 @@ void loop() {
         USE_SERIAL.print("[HTTP] begin...\n");
         // configure traged server and url
         //http.begin("https://www.howsmyssl.com/a/check", ca); //HTTPS
-        http.begin("http://example.com/index.html"); //HTTP => démarre connexion vers le serveur mentionné
+        http.begin("http://192.168.1.200:1883/T/HellowThere"); //HTTP => démarre connexion vers le serveur mentionné
 
         USE_SERIAL.print("[HTTP] GET...\n");
         // start connection and send HTTP header
