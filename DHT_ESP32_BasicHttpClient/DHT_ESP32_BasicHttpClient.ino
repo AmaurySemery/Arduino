@@ -51,20 +51,58 @@ void setup () {
 
 }
 
-  void update_stats(float tmp, int hum) {
-    tmin = min(tmin, tmp);
-    tmax = max(tmax, tmp);
-    hmin = min(hmin, hum);
-    hmax = max(hmax, hum);
-  }
+void update_stats(float tmp, int hum) {
+  tmin = min(tmin, tmp);
+  tmax = max(tmax, tmp);
+  hmin = min(hmin, hum);
+  hmax = max(hmax, hum);
+}
 
-  void loop () {
+void loop () {
+
+
+
+  // If any message is available on serial port :
+  if (Serial.available() > 0) {
+
+    String message = Serial.readStringUntil('\n');
+    message.toUpperCase();
+
+    Serial.print("DEBUG: ");
+    Serial.println(message);
+
+    float tmp = dht.readTemperature();
+    int hum = dht.readHumidity();
+    update_stats(tmp, hum);
+
+    if (message == "HUM" || message == "STH" || message == "ALL") {
+      Serial.print("HINS:");
+      Serial.println(hum);
+    }
+    if (message == "TMP" || message == "STT" || message == "ALL") {
+      Serial.print("TINS:");
+      Serial.println(tmp);
+    }
+    if (message == "STT" || message == "ALL") {
+      Serial.print("TMIN:");
+      Serial.println(tmin);
+      Serial.print("TMAX:");
+      Serial.println(tmax);
+    }
+    if (message == "STH" || message == "ALL") {
+      Serial.print("HMIN:");
+      Serial.println(hmin);
+      Serial.print("HMAX:");
+      Serial.println(hmax);
+    }
+  }
+  delay(50);
 
   if ((wifiMulti.run() == WL_CONNECTED)) { // Si c'est connecté, ça fait ce qu'il y à en dessous
 
     HTTPClient http; // va créer un objet qui s'appelle HTTPClient qui va permettre de lancer des requêtes en HTTP
 
-    float t = random(25, 35); // t = nombre au hasard entre 25 & 35
+    float t = dht.readTemperature();
     USE_SERIAL.println("[DEBG] " + String(t));
 
     USE_SERIAL.print("[HTTP] begin...\n");
@@ -100,40 +138,4 @@ void setup () {
   }
 
   delay(5000); // le tout est fait toutes les 5 secondes.
-
-    // If any message is available on serial port :
-    if (Serial.available() > 0) {
-
-      String message = Serial.readStringUntil('\n');
-      message.toUpperCase();
-
-      Serial.print("DEBUG: ");
-      Serial.println(message);
-
-      float tmp = dht.readTemperature();
-      int hum = dht.readHumidity();
-      update_stats(tmp, hum);
-
-      if (message == "HUM" || message == "STH" || message == "ALL") {
-        Serial.print("HINS:");
-        Serial.println(hum);
-      }
-      if (message == "TMP" || message == "STT" || message == "ALL") {
-        Serial.print("TINS:");
-        Serial.println(tmp);
-      }
-      if (message == "STT" || message == "ALL") {
-        Serial.print("TMIN:");
-        Serial.println(tmin);
-        Serial.print("TMAX:");
-        Serial.println(tmax);
-      }
-      if (message == "STH" || message == "ALL") {
-        Serial.print("HMIN:");
-        Serial.println(hmin);
-        Serial.print("HMAX:");
-        Serial.println(hmax);
-      }
-    }
-    delay(50);
-  }
+}
