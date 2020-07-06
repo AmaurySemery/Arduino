@@ -55,7 +55,7 @@ void loop() {
             USE_SERIAL.printf("[HTTP] GET... code: %d\n", httpCode);
 
             // file found at server
-            if(httpCode == HTTP_CODE_OK) { // Si ça s'est bien passé, il refait une variable où il met le getString puis affiche à l'écran
+            if(httpCode == HTTP_CODE_OK) { // Si ça s'est bien passé, il refait une variable où il met le getString puis affiche à l'écran => on a reçu un code 200
                 String payload = http.getString();
                 USE_SERIAL.println(payload);
             }
